@@ -4,24 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>A Digital Analog Clock</title>
-    <!-- <link rel="stylesheet" href="style.css" type="text/css" media="all"> -->
+    <title>A NTP Driven Timepiece</title>
     <style>
         /* Layout */
         .main {
             display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: middle;
+            justify-content: space-evenly;
             padding: 2em;
             height: 90vh;
-            justify-content: center;
+        }
+
+        .clockbox {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
             align-items: middle;
         }
 
-        .clockbox,
-        #clock {
-            width: 100%;
-        }
-
-        #localtime {
+        #browserTime {
             fill: red;
         }
 
@@ -79,16 +82,48 @@
             /*transition: transform .5s ease-in-out;*/
         }
 
+        #browser svg>#face>circle {
+            stroke: black;
+        }
+
+        #server svg>#face>circle {
+            stroke: navy;
+        }
+
+        #ntp svg>#face>circle {
+            stroke: tomato;
+        }
+
         #whence {
             text-align: center;
+            font-family: "Times New Roman", Times, serif;
+            font-style: normal;
+            font-size: 2em;
+        }
+
+        text {
+            font: bold 30px serif;
+            fill: black;
+            text-align: center;
+            text-anchor: middle;
+
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        svg {
+            align-items: center
         }
     </style>
 </head>
 
 <body>
     <main class="main">
-        <div class="clockbox">
-            <svg id="localtime" xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+        <div id="browser" class="clockbox">
+            <h1 id="where"></h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
                 <g id="face">
                     <circle class="circle" cx="300" cy="300" r="253.9" />
                     <path class="hour-marks"
@@ -107,13 +142,12 @@
                     <path class="second-arm" d="M300.5 350V55" />
                     <circle class="sizing-box" cx="300" cy="300" r="253.9" />
                 </g>
-                <g id="whence">
-                    <text x="0" y="0">My text uses Super Sans</text>
-                </g>
             </svg>
-        </div><!-- .clockbox -->
-        <div class="clockbox">
-            <svg id="server" xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+            <p id="whence"></p>
+        </div>
+        <div id="server" class="clockbox">
+            <h1 id="where"></h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
                 <g id="face">
                     <circle class="circle" cx="300" cy="300" r="253.9" />
                     <path class="hour-marks"
@@ -132,13 +166,12 @@
                     <path class="second-arm" d="M300.5 350V55" />
                     <circle class="sizing-box" cx="300" cy="300" r="253.9" />
                 </g>
-                <g id="whence">
-                    <text font-family="Sans">My text uses Super Sans</text>
-                </g>
             </svg>
-        </div><!-- .clockbox -->
-        <div class="clockbox">
-            <svg id="ntp" xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+            <p id="whence"></p>
+        </div>
+        <div id="ntp" class="clockbox">
+            <h1 id="where"></h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
                 <g id="face">
                     <circle class="circle" cx="300" cy="300" r="253.9" />
                     <path class="hour-marks"
@@ -157,24 +190,22 @@
                     <path class="second-arm" d="M300.5 350V55" />
                     <circle class="sizing-box" cx="300" cy="300" r="253.9" />
                 </g>
-                <g id="whence">
-                    <text font-family="Sans">My text uses Super Sans</text>
-                </g>
             </svg>
-        </div><!-- .clockbox -->
+            <p id="whence"></p>
+        </div>
     </main>
 
     <script>
-        paintClock = (selector, date, addMillis = true) => {
+        paintClock = (parent, date, addMillis = true) => {
             millis = (addMillis ? date.getMilliseconds() : 0) / 1000.0;
             const hms = { hour: date.getHours(), minute: date.getMinutes(), second: date.getSeconds() + millis };
             hms.second *= 360 / 60;
             hms.minute = 360 / 60 * (hms.minute + hms.second / 360.0);
             hms.hour = 360 / 12 * (hms.hour + hms.minute / 360.0);
-            const clockElems = Array(...document.getElementById(selector).children);
+            const clockElems = Array(...document.querySelectorAll(`#${parent} > svg`)[0].children);
             for (prop in hms)
                 clockElems.find(elem => elem.id == prop).style.transform = `rotate(${hms[prop]}deg)`;
-            //clockElems.find(elem => elem.id == "whence").children[0].innerHTML = date.toISOString();
+            document.querySelector(`#${parent} #whence`).innerHTML = date.toISOString().replace("T", " ").replace("Z", " ");
         };
         parseTime = (strtime) => new Date(strtime);
         remoteTime = () => {
@@ -186,19 +217,24 @@
                 }
                 return resp.json();
             }).then((json) => {
-                remote = setTimeout(remoteTime, 50);
+                remote = setTimeout(remoteTime, 500);
                 paintClock("server", parseTime(json.localtime.whence));
                 if ("ntp" in json && "whence" in json.ntp)
                     paintClock("ntp", parseTime(json.ntp.whence));
             });
         }
 
-        localTime = () => {
-            paintClock("localtime", new Date(), true);
-            local = setTimeout(localTime, 50);
+        browserTime = () => {
+            paintClock("browser", new Date(), true);
+            local = setTimeout(browserTime, 500);
         }
+
+        document.querySelectorAll("#browser #where")[0].innerHTML = "Browser";
+        document.querySelectorAll("#ntp #where")[0].innerHTML = "NTP";
+        document.querySelectorAll("#server #where")[0].innerHTML = "Server";
+
         var remote = setTimeout(remoteTime, 0);
-        var local = setTimeout(localTime, 0);
+        var local = setTimeout(browserTime, 0);
     </script>
 </body>
 
