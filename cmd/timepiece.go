@@ -5,7 +5,7 @@ import (
 
 	"github.com/alecthomas/kingpin"
 
-	"../api"
+	"github.com/npotts/timepiece/api"
 )
 
 var (

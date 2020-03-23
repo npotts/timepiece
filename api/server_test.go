@@ -32,7 +32,7 @@ func TestServer_whence(t *testing.T) {
 	if !strings.Contains(rw.Body.String(), "localtime") {
 		t.Error("Body didnt contain localtime parameter")
 	}
-	if !strings.Contains(rw.Body.String(), `"ntp-client":null`) {
+	if !strings.Contains(rw.Body.String(), `"ntp":null`) {
 		t.Error("Body didnt contain ntp parameter")
 	}
 	s.server.Close()

@@ -11,7 +11,7 @@ import (
 	"github.com/gobuffalo/packr"
 	"github.com/gorilla/mux"
 
-	"../whence"
+	"github.com/npotts/timepiece/whence"
 )
 
 //Server contains enough to start a listening server
