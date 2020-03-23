@@ -21,7 +21,7 @@
 //Package api holds some HTTP API functions
 package api
 
-//go:generate packr build
+//go:generate packr -z
 
 import (
 	"encoding/json"
