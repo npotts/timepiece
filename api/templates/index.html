@@ -17,7 +17,7 @@
             height: 90vh;
         }
 
-        .clockbox {
+        .container {
             display: flex;
             flex-direction: column;
             flex-wrap: nowrap;
@@ -116,87 +116,124 @@
         svg {
             align-items: center
         }
+
+        table {
+            background-color: navajowhite;
+            min-width: 600px;
+        }
+
+        table th {
+            font: bold 30px serif;
+            background-color: bisque;
+        }
+
+        table td {
+            font: bold 20px serif;
+            text-align: center;
+            min-width: 10em;
+            background-color: bisque;
+        }
     </style>
 </head>
 
 <body>
-    <main class="main">
-        <div id="browser" class="clockbox">
-            <h1 id="where"></h1>
-            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
-                <g id="face">
-                    <circle class="circle" cx="300" cy="300" r="253.9" />
-                    <path class="hour-marks"
-                        d="M300.5 94V61M506 300.5h32M300.5 506v33M94 300.5H60M411.3 107.8l7.9-13.8M493 190.2l13-7.4M492.1 411.4l16.5 9.5M411 492.3l8.9 15.3M189 492.3l-9.2 15.9M107.7 411L93 419.5M107.5 189.3l-17.1-9.9M188.1 108.2l-9-15.6" />
-                    <circle class="mid-circle" cx="300" cy="300" r="16.2" />
-                </g>
-                <g id="hour">
-                    <path class="hour-arm" d="M300.5 298V142" />
-                    <circle class="sizing-box" cx="300" cy="300" r="253.9" />
-                </g>
-                <g id="minute">
-                    <path class="minute-arm" d="M300.5 298V67" />
-                    <circle class="sizing-box" cx="300" cy="300" r="253.9" />
-                </g>
-                <g id="second">
-                    <path class="second-arm" d="M300.5 350V55" />
-                    <circle class="sizing-box" cx="300" cy="300" r="253.9" />
-                </g>
-            </svg>
-            <p id="whence"></p>
-        </div>
-        <div id="server" class="clockbox">
-            <h1 id="where"></h1>
-            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
-                <g id="face">
-                    <circle class="circle" cx="300" cy="300" r="253.9" />
-                    <path class="hour-marks"
-                        d="M300.5 94V61M506 300.5h32M300.5 506v33M94 300.5H60M411.3 107.8l7.9-13.8M493 190.2l13-7.4M492.1 411.4l16.5 9.5M411 492.3l8.9 15.3M189 492.3l-9.2 15.9M107.7 411L93 419.5M107.5 189.3l-17.1-9.9M188.1 108.2l-9-15.6" />
-                    <circle class="mid-circle" cx="300" cy="300" r="16.2" />
-                </g>
-                <g id="hour">
-                    <path class="hour-arm" d="M300.5 298V142" />
-                    <circle class="sizing-box" cx="300" cy="300" r="253.9" />
-                </g>
-                <g id="minute">
-                    <path class="minute-arm" d="M300.5 298V67" />
-                    <circle class="sizing-box" cx="300" cy="300" r="253.9" />
-                </g>
-                <g id="second">
-                    <path class="second-arm" d="M300.5 350V55" />
-                    <circle class="sizing-box" cx="300" cy="300" r="253.9" />
-                </g>
-            </svg>
-            <p id="whence"></p>
-        </div>
-        <div id="ntp" class="clockbox">
-            <h1 id="where"></h1>
-            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
-                <g id="face">
-                    <circle class="circle" cx="300" cy="300" r="253.9" />
-                    <path class="hour-marks"
-                        d="M300.5 94V61M506 300.5h32M300.5 506v33M94 300.5H60M411.3 107.8l7.9-13.8M493 190.2l13-7.4M492.1 411.4l16.5 9.5M411 492.3l8.9 15.3M189 492.3l-9.2 15.9M107.7 411L93 419.5M107.5 189.3l-17.1-9.9M188.1 108.2l-9-15.6" />
-                    <circle class="mid-circle" cx="300" cy="300" r="16.2" />
-                </g>
-                <g id="hour">
-                    <path class="hour-arm" d="M300.5 298V142" />
-                    <circle class="sizing-box" cx="300" cy="300" r="253.9" />
-                </g>
-                <g id="minute">
-                    <path class="minute-arm" d="M300.5 298V67" />
-                    <circle class="sizing-box" cx="300" cy="300" r="253.9" />
-                </g>
-                <g id="second">
-                    <path class="second-arm" d="M300.5 350V55" />
-                    <circle class="sizing-box" cx="300" cy="300" r="253.9" />
-                </g>
-            </svg>
-            <p id="whence"></p>
+    <main>
+        <div class="main">
+            <div id="browser" class="container">
+                <h1 id="where"></h1>
+                <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+                    <g id="face">
+                        <circle class="circle" cx="300" cy="300" r="253.9" />
+                        <path class="hour-marks"
+                            d="M300.5 94V61M506 300.5h32M300.5 506v33M94 300.5H60M411.3 107.8l7.9-13.8M493 190.2l13-7.4M492.1 411.4l16.5 9.5M411 492.3l8.9 15.3M189 492.3l-9.2 15.9M107.7 411L93 419.5M107.5 189.3l-17.1-9.9M188.1 108.2l-9-15.6" />
+                        <circle class="mid-circle" cx="300" cy="300" r="16.2" />
+                    </g>
+                    <g id="hour">
+                        <path class="hour-arm" d="M300.5 298V142" />
+                        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+                    </g>
+                    <g id="minute">
+                        <path class="minute-arm" d="M300.5 298V67" />
+                        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+                    </g>
+                    <g id="second">
+                        <path class="second-arm" d="M300.5 350V55" />
+                        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+                    </g>
+                </svg>
+                <p id="whence"></p>
+            </div>
+            <div id="server" class="container">
+                <h1 id="where"></h1>
+                <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+                    <g id="face">
+                        <circle class="circle" cx="300" cy="300" r="253.9" />
+                        <path class="hour-marks"
+                            d="M300.5 94V61M506 300.5h32M300.5 506v33M94 300.5H60M411.3 107.8l7.9-13.8M493 190.2l13-7.4M492.1 411.4l16.5 9.5M411 492.3l8.9 15.3M189 492.3l-9.2 15.9M107.7 411L93 419.5M107.5 189.3l-17.1-9.9M188.1 108.2l-9-15.6" />
+                        <circle class="mid-circle" cx="300" cy="300" r="16.2" />
+                    </g>
+                    <g id="hour">
+                        <path class="hour-arm" d="M300.5 298V142" />
+                        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+                    </g>
+                    <g id="minute">
+                        <path class="minute-arm" d="M300.5 298V67" />
+                        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+                    </g>
+                    <g id="second">
+                        <path class="second-arm" d="M300.5 350V55" />
+                        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+                    </g>
+                </svg>
+                <p id="whence"></p>
+            </div>
+            <div id="ntp" class="container">
+                <h1 id="where"></h1>
+                <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+                    <g id="face">
+                        <circle class="circle" cx="300" cy="300" r="253.9" />
+                        <path class="hour-marks"
+                            d="M300.5 94V61M506 300.5h32M300.5 506v33M94 300.5H60M411.3 107.8l7.9-13.8M493 190.2l13-7.4M492.1 411.4l16.5 9.5M411 492.3l8.9 15.3M189 492.3l-9.2 15.9M107.7 411L93 419.5M107.5 189.3l-17.1-9.9M188.1 108.2l-9-15.6" />
+                        <circle class="mid-circle" cx="300" cy="300" r="16.2" />
+                    </g>
+                    <g id="hour">
+                        <path class="hour-arm" d="M300.5 298V142" />
+                        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+                    </g>
+                    <g id="minute">
+                        <path class="minute-arm" d="M300.5 298V67" />
+                        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+                    </g>
+                    <g id="second">
+                        <path class="second-arm" d="M300.5 350V55" />
+                        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+                    </g>
+                </svg>
+                <p id="whence"></p>
+            </div>
+            <div class="container">
+                <table id="tabular"></table>
+            </div>
         </div>
     </main>
 
     <script>
+        const times = { browser: null, server: null, ntp: null };
+        paintDeltaTable = () => {
+            const order = ["browser", "server", "ntp"];
+            const delta = (a, b) => {
+                if (a === b || times[a] === null || times[b] === null) return `<td>-</td>`;
+                return `<td>${(times[a] - times[b]).toFixed(1)} ms</td>`
+            };
+            const th = (elem, isrow) => `<th${isrow ? ' scope="row"' : ''}>${elem}</th>`;
+            const tr = (elem) => `<tr>${th(elem, true)}${order.map((tde) => delta(elem, tde)).join("")}</tr>`
+            const hdr = `<tr><th></th>${order.map(elem => th(elem, false)).join("")}</tr>`; //header row
+            const dat = order.map(elem => tr(elem)).join(""); //table data
+            document.querySelector("#tabular").innerHTML = `${hdr}${dat}`
+        }
+
         paintClock = (parent, date, addMillis = true) => {
+            times[parent] = new Date(date);
             millis = (addMillis ? date.getMilliseconds() : 0) / 1000.0;
             const hms = { hour: date.getHours(), minute: date.getMinutes(), second: date.getSeconds() + millis };
             hms.second *= 360 / 60;
@@ -221,11 +258,13 @@
                 paintClock("server", parseTime(json.localtime.whence));
                 if ("ntp" in json && "whence" in json.ntp)
                     paintClock("ntp", parseTime(json.ntp.whence));
+                paintDeltaTable();
             });
         }
 
         browserTime = () => {
             paintClock("browser", new Date(), true);
+            paintDeltaTable();
             local = setTimeout(browserTime, 500);
         }
 
