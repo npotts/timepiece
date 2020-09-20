@@ -20,8 +20,6 @@
 
 package api
 
-//go:generate packr build
-
 import (
 	"net/http/httptest"
 	"strings"
